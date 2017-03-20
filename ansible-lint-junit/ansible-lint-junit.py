@@ -9,7 +9,7 @@ pp = pprint.PrettyPrinter(indent=2)
 
 junit_xml_output = "ansible-lint-junit.xml"
 
-parser = OptionParser("%prog -u {user} -p {password} [file] [options]")
+parser = OptionParser("%prog [ansible-lint output file] [options]")
 
 parser.add_option("-o", "--output", action="store", dest="output_file", help="output XML to file", default=junit_xml_output)
 parser.add_option("-v", "--verbose", action="store_true", dest="verbose", help="print XML to console as command output", default=False)
