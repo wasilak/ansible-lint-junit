@@ -1,9 +1,14 @@
-#!/usr/bin/env python
-
 from optparse import OptionParser
 import pprint
 import xml.etree.cElementTree as ET
 import re
+
+
+__version__ = "0.9"
+
+
+def version():
+    return __version__
 
 
 def main():
@@ -12,10 +17,14 @@ def main():
 
     junit_xml_output = "ansible-lint-junit.xml"
 
-    parser = OptionParser("%prog [ansible-lint output file] [options]")
+    parser = OptionParser(
+        usage="%prog [ansible-lint output file] [options]",
+        version="%prog " + version()
+    )
 
     parser.add_option("-o", "--output", action="store", dest="output_file", help="output XML to file", default=junit_xml_output)
     parser.add_option("-v", "--verbose", action="store_true", dest="verbose", help="print XML to console as command output", default=False)
+    # parser.add_option(""--version", dest="verbose", help="print XML to console as command output", default=False)
 
     (options, args) = parser.parse_args()
 

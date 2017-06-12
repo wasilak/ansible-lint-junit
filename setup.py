@@ -1,14 +1,18 @@
 from setuptools import setup
 
+from bootstrap import bootstrap
+
+version = bootstrap.version()
+
 setup(
     name='ansible-lint-junit',
     packages=['bootstrap'],
-    version='0.8',
+    version=version,
     description='ansible-lint to JUnit converter.',
     author='wasil',
     author_email='piotr.m.wasilewski@gmail.com',
     url='https://github.com/wasilak/ansible-lint-junit',
-    download_url='https://github.com/wasilak/ansible-lint-junit/archive/0.8.tar.gz',
+    download_url='https://github.com/wasilak/ansible-lint-junit/archive/%s.tar.gz' % (version),
     keywords=['ansible', 'junit'],
     classifiers=[],
     entry_points = {
