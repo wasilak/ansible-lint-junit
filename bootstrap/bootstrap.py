@@ -4,7 +4,7 @@ import xml.etree.cElementTree as ET
 import re
 
 
-__version__ = "0.9"
+__version__ = "0.10"
 
 
 def version():
