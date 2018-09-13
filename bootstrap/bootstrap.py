@@ -1,10 +1,9 @@
 from optparse import OptionParser
-import pprint
 import xml.etree.cElementTree as ET
 import re
 
 
-__version__ = "0.10"
+__version__ = "0.11"
 
 
 def version():
@@ -12,8 +11,6 @@ def version():
 
 
 def main():
-
-    pp = pprint.PrettyPrinter(indent=2)
 
     junit_xml_output = "ansible-lint-junit.xml"
 
@@ -24,7 +21,6 @@ def main():
 
     parser.add_option("-o", "--output", action="store", dest="output_file", help="output XML to file", default=junit_xml_output)
     parser.add_option("-v", "--verbose", action="store_true", dest="verbose", help="print XML to console as command output", default=False)
-    # parser.add_option(""--version", dest="verbose", help="print XML to console as command output", default=False)
 
     (options, args) = parser.parse_args()
 
@@ -40,7 +36,7 @@ def main():
 
     for line in ansible_lint_output:
         if len(line):
-            errors_count = str(len(ansible_lint_output)-1)
+            errors_count = str(len(ansible_lint_output) - 1)
             break
 
     testsuite = ET.SubElement(testsuites, "testsuite", errors=errors_count, failures="0", tests=errors_count, time="0")

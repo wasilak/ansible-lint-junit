@@ -15,7 +15,7 @@ setup(
     download_url='https://github.com/wasilak/ansible-lint-junit/archive/%s.tar.gz' % (version),
     keywords=['ansible', 'junit'],
     classifiers=[],
-    entry_points = {
+    entry_points={
         "console_scripts": ['ansible-lint-junit = bootstrap.bootstrap:main']
     },
     install_requires=[
