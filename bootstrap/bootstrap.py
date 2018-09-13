@@ -36,8 +36,12 @@ def main():
     ansible_lint_output = open(args[0], "r").read().split("\n")
 
     testsuites = ET.Element("testsuites")
+    errors_count = "0"
 
-    errors_count = str(len(ansible_lint_output))
+    for line in ansible_lint_output:
+        if len(line):
+            errors_count = str(len(ansible_lint_output)-1)
+            break
 
     testsuite = ET.SubElement(testsuites, "testsuite", errors=errors_count, failures="0", tests=errors_count, time="0")
 
