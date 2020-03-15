@@ -1,9 +1,19 @@
-from optparse import OptionParser
-import xml.etree.cElementTree as ET
+import argparse
+import lxml.etree as ET
 import re
+import sys
+import signal
 
 
-__version__ = "0.11"
+__version__ = "0.12"
+
+
+def signal_handler(signal, frame):
+    exit(0)
+
+
+"""This stops ctrl+c from rendering typical Python stack trace and cleanly exits program."""
+signal.signal(signal.SIGINT, signal_handler)
 
 
 def version():
@@ -12,24 +22,19 @@ def version():
 
 def main():
 
-    junit_xml_output = "ansible-lint-junit.xml"
+    parser = argparse.ArgumentParser(description='Process some integers.')
 
-    parser = OptionParser(
-        usage="%prog [ansible-lint output file] [options]",
-        version="%prog " + version()
-    )
+    parser.add_argument(dest="input", action="store", nargs='*', help="output from 'ansible-lint -p' command.", type=argparse.FileType('r'), default=sys.stdin)
+    parser.add_argument("-o", "--output", dest="output_file", default="ansible-lint-junit.xml", action="store", help="print XML to console as command output")
+    parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", help="print XML to console as command output", default=False)
+    parser.add_argument('--version', action='version', version='%(prog)s {version}'.format(version=version()))
 
-    parser.add_option("-o", "--output", action="store", dest="output_file", help="output XML to file", default=junit_xml_output)
-    parser.add_option("-v", "--verbose", action="store_true", dest="verbose", help="print XML to console as command output", default=False)
+    arguments = parser.parse_args()
 
-    (options, args) = parser.parse_args()
+    if isinstance(arguments.input, list):
+        arguments.input = arguments.input[0]
 
-    if len(args) == 0 or not args[0]:
-        parser.print_help()
-        parser.error('You need to provide file with output from "ansible-lint -p" command.')
-        exit(1)
-
-    ansible_lint_output = open(args[0], "r").read().split("\n")
+    ansible_lint_output = arguments.input.read().split("\n")
 
     testsuites = ET.Element("testsuites")
     errors_count = "0"
@@ -41,7 +46,7 @@ def main():
 
     testsuite = ET.SubElement(testsuites, "testsuite", errors=errors_count, failures="0", tests=errors_count, time="0")
 
-    line_regex = re.compile('^(.*?):(\d+?):\s\[(.*)\]\s(.*)$')
+    line_regex = re.compile('^(.*?):(\\d+?):\\s\\[(.*)\\]\\s(.*)$')
 
     if 0 == len(ansible_lint_output):
         testcase = ET.SubElement(testsuite, "testcase", name="dummy_testcase.py")
@@ -74,8 +79,8 @@ def main():
                 ).text = line_data['error']['text']
 
     tree = ET.ElementTree(testsuites)
-    tree.write(options.output_file, encoding='utf8', method='xml')
-    parsed_lines_xml = ET.tostring(testsuites, encoding='utf8', method='xml')
+    tree.write(arguments.output_file, encoding='utf8', method='xml', pretty_print=True)
+    parsed_lines_xml = ET.tostring(testsuites, encoding='utf8', method='xml', pretty_print=True)
 
-    if options.verbose:
-        print(parsed_lines_xml)
+    if arguments.verbose:
+        print(parsed_lines_xml.decode())

@@ -20,5 +20,6 @@ setup(
     },
     install_requires=[
         'ansible-lint',
+        'lxml',
     ],
 )
