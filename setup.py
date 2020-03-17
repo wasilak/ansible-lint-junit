@@ -22,4 +22,7 @@ setup(
         'ansible-lint',
         'lxml',
     ],
+    setup_requires=[
+        'lxml',
+    ],
 )
