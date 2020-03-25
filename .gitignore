@@ -195,3 +195,6 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/windows,macos,vim,sublimetext,python
 
 .tags
+
+ansible-lint-junit.xml
+output.txt
