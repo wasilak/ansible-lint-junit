@@ -25,7 +25,7 @@ def main():
     parser = argparse.ArgumentParser(description='Process some integers.')
 
     parser.add_argument(dest="input", action="store", nargs='*', help="output from 'ansible-lint -p' command.", type=argparse.FileType('r'), default=sys.stdin)
-    parser.add_argument("-o", "--output", dest="output_file", default="ansible-lint-junit.xml", action="store", help="print XML to console as command output")
+    parser.add_argument("-o", "--output", dest="output_file", default="ansible-lint-junit.xml", action="store", help="print XML to output file")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", help="print XML to console as command output", default=False)
     parser.add_argument('--version', action='version', version='%(prog)s {version}'.format(version=version()))
 
