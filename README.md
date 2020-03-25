@@ -1,4 +1,4 @@
-[ansible-lint](https://github.com/willthames/ansible-lint) to JUnit converter
+[ansible-lint](https://github.com/willthames/ansible-lint) to JUnit converter [![Build Status](https://travis-ci.org/wasilak/ansible-lint-junit.svg?branch=master)](https://travis-ci.org/wasilak/ansible-lint-junit)
 ---
 
 ### Installation
