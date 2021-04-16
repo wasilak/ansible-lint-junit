@@ -49,7 +49,7 @@ def main():
     line_regex = re.compile('^(.*?):(\\d+?):\\s(.*)$')
 
     if 0 == len(ansible_lint_output):
-        testcase = ET.SubElement(testsuite, "testcase", name="dummy_testcase.py")
+        ET.SubElement(testsuite, "testcase", name="dummy_testcase.py")
     else:
         parsed_lines = []
         for line in ansible_lint_output:
@@ -64,7 +64,9 @@ def main():
                     "text": line_match.group(3),
                 }
                 parsed_lines.append(line_data)
+
                 testcase = ET.SubElement(testsuite, "testcase", name=line_data['filename'])
+
                 ET.SubElement(
                     testcase,
                     "failure",
