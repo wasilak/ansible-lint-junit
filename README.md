@@ -17,16 +17,28 @@ pip install ansible-lint-junit --upgrade
 ```
 
 ### Usage:
-1. you can pipe output of `ansible-lint -p`:
+1. you can pipe output of `ansible-lint`:
     ```shell
-    ansible-lint playbook.yml -p | ansible-lint-junit -o ansible-lint.xml
+    # less verbose
+    ansible-lint playbook.yml -p --nocolor | ansible-lint-junit -o ansible-lint.xml
+
+    # more verbose
+    ansible-lint playbook.yml --parseable-severity --nocolor | ansible-lint-junit -o ansible-lint.xml
     ```
-3. or run `ansible-lint` on your playbook(s) with parameter `-p` (it is required) and redirect output to file
+3. or run `ansible-lint` on your playbook(s) and redirect output to file
     ```shell
-    ansible-lint -p your_fancy_playbook.yml > ansible-lint.txt
+    # less verbose
+    ansible-lint -p --nocolor your_fancy_playbook.yml > ansible-lint.txt
+
+    # more verbose
+    ansible-lint --parseable-severity --nocolor your_fancy_playbook.yml > ansible-lint.txt
     ```
     and run `ansible-lint-junit` and pass generated file to it
     ```shell
+    # less verbose
+    ansible-lint-junit ansible-lint.txt -o ansible-lint.xml
+
+    # more verbose
     ansible-lint-junit ansible-lint.txt -o ansible-lint.xml
     ```
 

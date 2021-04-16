@@ -5,7 +5,7 @@ import sys
 import signal
 
 
-__version__ = "0.15"
+__version__ = "0.16"
 
 
 def signal_handler(signal, frame):
@@ -46,7 +46,7 @@ def main():
 
     testsuite = ET.SubElement(testsuites, "testsuite", errors=errors_count, failures="0", tests=errors_count, time="0")
 
-    line_regex = re.compile('^(.*?):(\\d+?):\\s\\[(.*)\\]\\s(.*)$')
+    line_regex = re.compile('^(.*?):(\\d+?):\\s(.*)$')
 
     if 0 == len(ansible_lint_output):
         testcase = ET.SubElement(testsuite, "testcase", name="dummy_testcase.py")
@@ -54,18 +54,14 @@ def main():
         parsed_lines = []
         for line in ansible_lint_output:
             if 0 < len(line):
-                # print(line)
 
                 line_match = line_regex.match(line)
 
                 line_data = {
                     "filename": line_match.group(1),
                     "line": int(line_match.group(2)),
-                    "error": {
-                        "code": line_match.group(3),
-                        "message": line_match.group(4),
-                        "text": "[" + line_match.group(3) + "] " + line_match.group(4)
-                    }
+                    "error": line_match.group(3),
+                    "text": line_match.group(3),
                 }
                 parsed_lines.append(line_data)
                 testcase = ET.SubElement(testsuite, "testcase", name=line_data['filename'])
@@ -74,9 +70,9 @@ def main():
                     "failure",
                     file=line_data['filename'],
                     line=str(line_data['line']),
-                    message=line_data['error']['text'],
+                    message=line_data['error'],
                     type="Ansible Lint"
-                ).text = line_data['error']['text']
+                ).text = line_data['error']
 
     tree = ET.ElementTree(testsuites)
     tree.write(arguments.output_file, encoding='utf8', method='xml', pretty_print=True)

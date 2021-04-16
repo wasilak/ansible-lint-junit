@@ -26,8 +26,8 @@ setup(
         "console_scripts": ['ansible-lint-junit = bootstrap.bootstrap:main']
     },
     install_requires=[
-        'ansible-lint',
-        'lxml',
+        'ansible-lint>=5.0.7',
+        'lxml>=4.6.3',
     ],
     setup_requires=[
         'lxml',
