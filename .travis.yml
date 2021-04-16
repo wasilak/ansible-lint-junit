@@ -5,6 +5,7 @@ python:
   - 3.6
   - 3.7
   - 3.8
+  - 3.9
 install:
   - pip install -r requirements.txt
 script: python --version
@@ -16,4 +17,3 @@ deploy:
   password:
     secure: N3obUwS6Ofg++wr10192++SzHTnSn9oBVt9S4ua6Dux4jYNTTvEhjyp/zvNzwJCUDrwBG8nrq/XREbtvIhdBVcnEqaoq6jhGxMwLVKCqegHbS9iiYV28FgRwUQrFzBliarF1o1E/JuARJafpq++OnXjGZ2G9P8bjFl3/2UFMA11z7TTf1chOkcVDrTBXis0mzTgxg6AUZnho9p1h7aQ4vTyGXWe9e+sz1QzBbgk28m7DNL1T03KQFrBXSr4KD3v7VUjkAoH/t1CrzWLovLOp4lwv+NM1MM+AHN+vS0yFipW42CjPWWf/9Kh77lKCl5tIv0OlFwyHSKCfuhqy5JzD6TxwirUYIcQtohgN2gj8KUiB66QN3g4S02gPa4gm7av5J6u/qFL9MjxeUxziXmuuT8wpMFcPUHK7/bRsS2/klKez3rCrLUetLJYkMeR5owl46SfH96cbKj9fFx1x2kgddJthO+4ZADa5m6f1DaI0NpYr37JgnUeYZp8I7fRpKfNxV+FAJtoo4mJpFrFzuTjHG0bmgfRuQZnIwGbAItaKSkSt/mB98yVOB70X8/NLjw/hNJfwGvUdDUz1Y5VEIB9KJeqDj9OSk2M4cHgnoOldbpGAHIaJpLLLvbfeQyLXwER3ciRmrLt4X3IlpnHbl6U1yTLPx8/4tqHweMo5muzySUQ=
   skip_existing: true
-
