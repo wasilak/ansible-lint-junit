@@ -1,4 +1,4 @@
-[ansible-lint](https://github.com/willthames/ansible-lint) to JUnit converter [![Build Status](https://travis-ci.org/wasilak/ansible-lint-junit.svg?branch=master)](https://travis-ci.org/wasilak/ansible-lint-junit)
+[ansible-lint](https://github.com/willthames/ansible-lint) to JUnit converter [![Build Status](https://travis-ci.org/wasilak/ansible-lint-junit.svg?branch=master)](https://travis-ci.org/wasilak/ansible-lint-junit)[![Total alerts](https://img.shields.io/lgtm/alerts/g/wasilak/ansible-lint-junit.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/wasilak/ansible-lint-junit/alerts/)[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/wasilak/ansible-lint-junit.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/wasilak/ansible-lint-junit/context:python)
 ---
 
 ### Installation
