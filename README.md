@@ -11,7 +11,7 @@ pip install ansible-lint-junit
 ```
 
 ### Updating
-via pip;
+via pip:
 ```shell
 pip install ansible-lint-junit --upgrade
 ```
