@@ -38,7 +38,7 @@ jobs:
           architecture: x64
 
       - run: |
-          pip install -r requirements.txt
+          pip3 install -r requirements.txt
           python --version
 
       - name: Install pypa/build
