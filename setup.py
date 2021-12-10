@@ -30,6 +30,6 @@ setup(
         'lxml>=4.6.3',
     ],
     setup_requires=[
-        'lxml',
+        # 'lxml',
     ],
 )
