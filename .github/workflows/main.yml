@@ -34,5 +34,5 @@ jobs:
           architecture: x64
 
       - run: |
-        pip install -r requirements.txt
-        python --version
+          pip install -r requirements.txt
+          python --version
