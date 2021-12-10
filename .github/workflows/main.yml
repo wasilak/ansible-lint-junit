@@ -39,7 +39,8 @@ jobs:
 
       - run: |
           # pip install -r requirements.txt
-          sudo apt-get install python3-lxml
+          sudo apt-get install -y python-dev libxml2 libxml2-dev libxslt-dev
+          pip install -r requirements.txt
 
       - name: Install pypa/build
         run: >-
