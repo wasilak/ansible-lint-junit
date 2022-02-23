@@ -1,11 +1,12 @@
 import argparse
-import lxml.etree as ET
+import xml.etree.cElementTree as ET
+import xml.dom.minidom as minidom
 import re
 import sys
 import signal
 
 
-__version__ = "0.16"
+__version__ = "0.17"
 
 
 def signal_handler(signal, frame):
@@ -65,7 +66,7 @@ def main():
                 }
                 parsed_lines.append(line_data)
 
-                testcase = ET.SubElement(testsuite, "testcase", name=line_data['filename'])
+                testcase = ET.SubElement(testsuite, "testcase", name="{}-{}".format(line_data['filename'], len(parsed_lines)))
 
                 ET.SubElement(
                     testcase,
@@ -77,8 +78,17 @@ def main():
                 ).text = line_data['error']
 
     tree = ET.ElementTree(testsuites)
-    tree.write(arguments.output_file, encoding='utf8', method='xml', pretty_print=True)
-    parsed_lines_xml = ET.tostring(testsuites, encoding='utf8', method='xml', pretty_print=True)
+
+    xml_string = ET.tostring(testsuites, encoding='utf8', method='xml')
+    xml_nice = minidom.parseString(xml_string)
+    xml_nice = xml_nice.toprettyxml(indent="\t")
+
+    text_file = open(arguments.output_file, "w")
+    text_file.write(xml_nice)
+    text_file.close()
 
     if arguments.verbose:
-        print(parsed_lines_xml.decode())
+        print(xml_nice)
+
+if __name__== "__main__" :
+    main()
