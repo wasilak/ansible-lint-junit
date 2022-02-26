@@ -77,8 +77,6 @@ def main():
                     type="Ansible Lint"
                 ).text = line_data['error']
 
-    tree = ET.ElementTree(testsuites)
-
     xml_string = ET.tostring(testsuites, encoding='utf8', method='xml')
     xml_nice = minidom.parseString(xml_string)
     xml_nice = xml_nice.toprettyxml(indent="\t")
