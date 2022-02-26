@@ -3,7 +3,9 @@
 
 import setuptools
 
-__version__ = "0.17.2"
+version = {}
+with open("src/ansible_lint_junit/version.py") as fp:
+    exec(fp.read(), version)
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -12,14 +14,14 @@ setuptools.setup(
     name='ansible-lint-junit',
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
-    version=__version__,
+    version=version['__version__'],
     description='ansible-lint to JUnit converter.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='wasil',
     author_email='piotr.m.boruc@gmail.com',
     url='https://github.com/wasilak/ansible-lint-junit',
-    download_url='https://github.com/wasilak/ansible-lint-junit/archive/%s.tar.gz' % (__version__),
+    download_url='https://github.com/wasilak/ansible-lint-junit/archive/%s.tar.gz' % (version['__version__']),
     keywords=['ansible', 'junit'],
         classifiers=[
         "Programming Language :: Python :: 3",
