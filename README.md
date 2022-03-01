@@ -4,9 +4,6 @@
 ### Installation
 via pip;
 ```shell
-# In case of Python 2.x, you have to first run:
-# pip install lxml
-
 pip install ansible-lint-junit
 ```
 
