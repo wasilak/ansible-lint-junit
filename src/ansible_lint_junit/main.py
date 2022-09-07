@@ -55,6 +55,9 @@ def main():
             if 0 < len(line):
 
                 line_match = line_regex.match(line)
+                
+                if not line_match:
+                    continue
 
                 line_data = {
                     "filename": line_match.group(1),
