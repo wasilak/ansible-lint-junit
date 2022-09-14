@@ -4,7 +4,7 @@ import xml.dom.minidom as minidom
 import re
 import sys
 import signal
-from  .version import __version__
+from  version import __version__
 
 
 def signal_handler(signal, frame):
