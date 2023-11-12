@@ -4,6 +4,7 @@ import xml.dom.minidom as minidom
 import re
 import sys
 import signal
+import defusedxml
 from .version import __version__
 
 
