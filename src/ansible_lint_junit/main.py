@@ -4,14 +4,14 @@ import xml.dom.minidom as minidom
 import re
 import sys
 import signal
-from  .version import __version__
+from .version import __version__
 
 
 def signal_handler(signal, frame):
     exit(0)
 
 
-"""This stops ctrl+c from rendering typical Python stack trace and cleanly exits program."""
+# This stops ctrl+c from rendering typical Python stack trace and cleanly exits program.
 signal.signal(signal.SIGINT, signal_handler)
 
 
@@ -23,12 +23,18 @@ def main():
 
     parser = argparse.ArgumentParser(description='Process some integers.')
 
-    parser.add_argument(dest="input", action="store", nargs='*', help="output from 'ansible-lint -p' command.", type=argparse.FileType('r'), default=sys.stdin)
-    parser.add_argument("-o", "--output", dest="output_file", default="ansible-lint-junit.xml", action="store", help="print XML to output file")
-    parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", help="print XML to console as command output", default=False)
-    parser.add_argument('--version', action='version', version='%(prog)s {version}'.format(version=version()))
+    parser.add_argument(dest="input", action="store", nargs='*',
+                        help="output from 'ansible-lint -p' command.", type=argparse.FileType('r'), default=sys.stdin)
+    parser.add_argument("-o", "--output", dest="output_file",
+                        default="ansible-lint-junit.xml", action="store", help="print XML to output file")
+    parser.add_argument("-v", "--verbose", dest="verbose", action="store_true",
+                        help="print XML to console as command output", default=False)
+    parser.add_argument('--version', action='version',
+                        version='%(prog)s {version}'.format(version=version()))
 
     arguments = parser.parse_args()
+
+    defusedxml.defuse_stdlib()
 
     if isinstance(arguments.input, list):
         arguments.input = arguments.input[0]
@@ -43,7 +49,8 @@ def main():
             errors_count = str(len(ansible_lint_output) - 1)
             break
 
-    testsuite = ET.SubElement(testsuites, "testsuite", errors=errors_count, failures="0", tests=errors_count, time="0")
+    testsuite = ET.SubElement(
+        testsuites, "testsuite", errors=errors_count, failures="0", tests=errors_count, time="0")
 
     line_regex = re.compile('^(.*?):(\\d+?):\\s(.*)$')
 
@@ -55,7 +62,7 @@ def main():
             if 0 < len(line):
 
                 line_match = line_regex.match(line)
-                
+
                 if not line_match:
                     continue
 
@@ -67,7 +74,8 @@ def main():
                 }
                 parsed_lines.append(line_data)
 
-                testcase = ET.SubElement(testsuite, "testcase", name="{}-{}".format(line_data['filename'], len(parsed_lines)))
+                testcase = ET.SubElement(
+                    testsuite, "testcase", name="{}-{}".format(line_data['filename'], len(parsed_lines)))
 
                 ET.SubElement(
                     testcase,
@@ -89,5 +97,6 @@ def main():
     if arguments.verbose:
         print(xml_nice)
 
-if __name__== "__main__" :
+
+if __name__ == "__main__":
     main()

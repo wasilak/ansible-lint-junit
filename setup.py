@@ -21,9 +21,10 @@ setuptools.setup(
     author='wasil',
     author_email='piotr.m.boruc@gmail.com',
     url='https://github.com/wasilak/ansible-lint-junit',
-    download_url='https://github.com/wasilak/ansible-lint-junit/archive/%s.tar.gz' % (version['__version__']),
+    download_url='https://github.com/wasilak/ansible-lint-junit/archive/%s.tar.gz' % (
+        version['__version__']),
     keywords=['ansible', 'junit'],
-        classifiers=[
+    classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
@@ -33,6 +34,7 @@ setuptools.setup(
     },
     install_requires=[
         'ansible-lint>=5.0.7',
+        'defusedxml>=0.7.1',
     ],
     setup_requires=[],
     python_requires=">=3.6",
