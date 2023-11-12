@@ -30,6 +30,8 @@ def main():
                         default="ansible-lint-junit.xml", action="store", help="print XML to output file")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true",
                         help="print XML to console as command output", default=False)
+    parser.add_argument("-d", "--dummy-test", dest="dummy", action="store_true",
+                        help="Adds single (1) dummy test if there were 0 tests and/or 0 errors", default=False)
     parser.add_argument('--version', action='version',
                         version='%(prog)s {version}'.format(version=version()))
 
@@ -50,42 +52,50 @@ def main():
             errors_count = str(len(ansible_lint_output) - 1)
             break
 
-    testsuite = ET.SubElement(
-        testsuites, "testsuite", errors=errors_count, failures="0", tests=errors_count, time="0")
+    if arguments.dummy:
+        testsuite = ET.SubElement(
+            testsuites, "testsuite", errors=errors_count, failures="0", tests="1", time="0")
 
-    line_regex = re.compile('^(.*?):(\\d+?):\\s(.*)$')
-
-    if 0 == len(ansible_lint_output):
-        ET.SubElement(testsuite, "testcase", name="dummy_testcase.py")
+        ET.SubElement(testsuite, "testcase",
+                      name="dummy_testcase_ansible_lint_junit")
     else:
-        parsed_lines = []
-        for line in ansible_lint_output:
-            if 0 < len(line):
+        testsuite = ET.SubElement(
+            testsuites, "testsuite", errors=errors_count, failures="0", tests=errors_count, time="0")
 
-                line_match = line_regex.match(line)
+        line_regex = re.compile('^(.*?):(\\d+?):\\s(.*)$')
 
-                if not line_match:
-                    continue
+        if 0 == len(ansible_lint_output):
+            ET.SubElement(testsuite, "testcase",
+                          name="dummy_testcase_ansible_lint_junit")
+        else:
+            parsed_lines = []
+            for line in ansible_lint_output:
+                if 0 < len(line):
 
-                line_data = {
-                    "filename": line_match.group(1),
-                    "line": int(line_match.group(2)),
-                    "error": line_match.group(3),
-                    "text": line_match.group(3),
-                }
-                parsed_lines.append(line_data)
+                    line_match = line_regex.match(line)
 
-                testcase = ET.SubElement(
-                    testsuite, "testcase", name="{}-{}".format(line_data['filename'], len(parsed_lines)))
+                    if not line_match:
+                        continue
 
-                ET.SubElement(
-                    testcase,
-                    "failure",
-                    file=line_data['filename'],
-                    line=str(line_data['line']),
-                    message=line_data['error'],
-                    type="Ansible Lint"
-                ).text = line_data['error']
+                    line_data = {
+                        "filename": line_match.group(1),
+                        "line": int(line_match.group(2)),
+                        "error": line_match.group(3),
+                        "text": line_match.group(3),
+                    }
+                    parsed_lines.append(line_data)
+
+                    testcase = ET.SubElement(
+                        testsuite, "testcase", name="{}-{}".format(line_data['filename'], len(parsed_lines)))
+
+                    ET.SubElement(
+                        testcase,
+                        "failure",
+                        file=line_data['filename'],
+                        line=str(line_data['line']),
+                        message=line_data['error'],
+                        type="Ansible Lint"
+                    ).text = line_data['error']
 
     xml_string = ET.tostring(testsuites, encoding='utf8', method='xml')
     xml_nice = minidom.parseString(xml_string)
