@@ -35,7 +35,7 @@ def main():
     parser.add_argument('--version', action='version',
                         version='%(prog)s {version}'.format(version=version()))
     parser.add_argument("--ignore-warnings", action="store_true", default=False,
-                        help="Ignore warnings")
+                        help="Ignore ansible-lint warnings")
 
     arguments = parser.parse_args()
 
@@ -51,7 +51,7 @@ def main():
 
     for line in ansible_lint_output:
         if len(line):
-            errors_count = str(len(ansible_lint_output) - 1)
+            # Break ansible_lint_output is empty, I suppose?      
             break
 
     if arguments.dummy:
@@ -73,7 +73,6 @@ def main():
             parsed_lines = []
             for line in ansible_lint_output:
                 if 0 < len(line):
-                    #print(line)
                     line_match = line_regex.match(line)
 
                     if not line_match:
@@ -88,6 +87,7 @@ def main():
                         "text": line_match.group(3),
                     }
                     parsed_lines.append(line_data)
+                    errors_count = int(errors_count) + 1
 
                     testcase = ET.SubElement(
                         testsuite, "testcase", name="{}-{}".format(line_data['filename'], len(parsed_lines)))
@@ -100,6 +100,8 @@ def main():
                         message=line_data['error'],
                         type="Ansible Lint"
                     ).text = line_data['error']
+
+                    testsuite.set("errors", str(errors_count))
 
     xml_string = ET.tostring(testsuites, encoding='utf8', method='xml')
     xml_nice = minidom.parseString(xml_string)
