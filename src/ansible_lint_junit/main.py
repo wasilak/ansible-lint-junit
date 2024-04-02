@@ -34,6 +34,8 @@ def main():
                         help="Adds single (1) dummy test if there were 0 tests and/or 0 errors", default=False)
     parser.add_argument('--version', action='version',
                         version='%(prog)s {version}'.format(version=version()))
+    parser.add_argument("--ignore-warnings", default=False,
+                        help="Ignore warnings")
 
     arguments = parser.parse_args()
 
@@ -75,6 +77,9 @@ def main():
                     line_match = line_regex.match(line)
 
                     if not line_match:
+                        continue
+
+                    if arguments.ignore_warnings and "(warning)" in line_match.group(3).lower:
                         continue
 
                     line_data = {
