@@ -32,7 +32,7 @@ def main():
                         help="print XML to console as command output", default=False)
     parser.add_argument("-d", "--dummy-test", dest="dummy", action="store_true",
                         help="Adds single (1) dummy test if there were 0 tests and/or 0 errors", default=False)
-    parser.add_argument('--version', action='version',
+    parser.add_argument("--version", action="version",
                         version='%(prog)s {version}'.format(version=version()))
     parser.add_argument("--ignore-warnings", action="store_true", default=False,
                         help="Ignore ansible-lint warnings")
