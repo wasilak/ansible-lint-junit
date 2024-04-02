@@ -34,7 +34,7 @@ def main():
                         help="Adds single (1) dummy test if there were 0 tests and/or 0 errors", default=False)
     parser.add_argument('--version', action='version',
                         version='%(prog)s {version}'.format(version=version()))
-    parser.add_argument("--ignore-warnings", default=False,
+    parser.add_argument("--ignore-warnings", action="store_true", default=False,
                         help="Ignore warnings")
 
     arguments = parser.parse_args()
@@ -73,15 +73,14 @@ def main():
             parsed_lines = []
             for line in ansible_lint_output:
                 if 0 < len(line):
-
+                    #print(line)
                     line_match = line_regex.match(line)
 
                     if not line_match:
                         continue
 
-                    if arguments.ignore_warnings and "(warning)" in line_match.group(3).lower:
+                    if arguments.ignore_warnings and line_match.group(3).endswith(" (warning)"):
                         continue
-
                     line_data = {
                         "filename": line_match.group(1),
                         "line": int(line_match.group(2)),
