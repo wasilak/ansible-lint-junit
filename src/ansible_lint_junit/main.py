@@ -49,11 +49,6 @@ def main():
     testsuites = ET.Element("testsuites")
     errors_count = "0"
 
-    for line in ansible_lint_output:
-        if len(line):
-            # Break ansible_lint_output is empty, I suppose?      
-            break
-
     if arguments.dummy:
         testsuite = ET.SubElement(
             testsuites, "testsuite", errors=errors_count, failures="0", tests="1", time="0")
