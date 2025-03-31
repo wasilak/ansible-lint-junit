@@ -86,7 +86,7 @@ def main():
                     parsed_lines.append(line_data)
 
                     testcase = ET.SubElement(
-                        testsuite, "testcase", file="{}".format(line_data['filename']), name="{}-{}".format(line_data['filename'], len(parsed_lines)))
+                        testsuite, "testcase", file="{}#L{}".format(line_data['filename'], len(parsed_lines)), name="{}-{}".format(line_data['filename'], len(parsed_lines)))
 
                     ET.SubElement(
                         testcase,
