@@ -198,3 +198,6 @@ $RECYCLE.BIN/
 
 ansible-lint-junit.xml
 output.txt
+
+bin/
+pyvenv.cfg
